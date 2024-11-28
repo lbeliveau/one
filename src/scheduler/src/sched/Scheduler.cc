@@ -544,6 +544,12 @@ static bool match_host(AclXML * acls, UserPoolXML * upool, VirtualMachineXML* vm
                        HostShareCapacity &sr, HostXML * host, int &n_auth, int& n_error, int &n_fits,
                        int &n_matched, string &error)
 {
+    {
+        ostringstream oss;
+        oss << "*** match_host()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     // -------------------------------------------------------------------------
     // Filter current Hosts for resched VMs
     // -------------------------------------------------------------------------
@@ -859,6 +865,12 @@ static bool match_network(AclXML * acls, UserPoolXML * upool,
 
 static void log_match(int vid, const string& msg)
 {
+    {
+        ostringstream oss;
+        oss << "*** log_match()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     ostringstream oss;
 
     oss << "Match-making results for VM " << vid << ":\n\t" << msg << endl;
@@ -871,6 +883,12 @@ static void log_match(int vid, const string& msg)
 
 void Scheduler::match_schedule()
 {
+    {
+        ostringstream oss;
+        oss << "*** Scheduler::match_schedule()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     VirtualMachineXML * vm;
 
     HostShareCapacity sr;
@@ -1311,6 +1329,12 @@ void Scheduler::match_schedule()
 
 void Scheduler::dispatch()
 {
+    {
+        ostringstream oss;
+        oss << "*** Scheduler::dispatch()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     HostXML *           host;
     DatastoreXML *      ds;
     VirtualNetworkXML * net;
@@ -1749,6 +1773,12 @@ void Scheduler::do_vm_groups()
 
 void Scheduler::external_scheduler()
 {
+    {
+        ostringstream oss;
+        oss << "*** Scheduler::external_scheduler()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     if (!ext_scheduler.is_initialized())
     {
         return;

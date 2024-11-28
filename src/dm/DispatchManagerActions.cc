@@ -40,6 +40,12 @@ using namespace std;
 int DispatchManager::deploy(unique_ptr<VirtualMachine> vm,
                             const RequestAttributes& ra)
 {
+    {
+        ostringstream oss;
+        oss << "*** DispatchManager::deploy()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     ostringstream oss;
     int vid;
     int uid;
@@ -185,6 +191,8 @@ int DispatchManager::import(unique_ptr<VirtualMachine> vm, const RequestAttribut
 int DispatchManager::migrate(VirtualMachine * vm, int poff_migrate,
                              const RequestAttributes& ra)
 {
+    NebulaLog::log("HMM", Log::ERROR, "*** DispatchManager::migrate()");
+
     ostringstream oss;
     int           vid;
 
@@ -243,6 +251,8 @@ error:
 int DispatchManager::live_migrate(VirtualMachine * vm,
                                   const RequestAttributes& ra)
 {
+    NebulaLog::log("HMM", Log::ERROR, "*** DispatchManager::live_migrate()");
+
     ostringstream oss;
     int           vid;
 

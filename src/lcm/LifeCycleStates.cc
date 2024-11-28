@@ -34,6 +34,12 @@ using namespace std;
 
 void LifeCycleManager::start_prolog_migrate(VirtualMachine* vm)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::start_prolog_migrate()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     HostShareCapacity sr;
 
     time_t the_time = time(0);
@@ -75,6 +81,12 @@ void LifeCycleManager::start_prolog_migrate(VirtualMachine* vm)
 
 void LifeCycleManager::revert_migrate_after_failure(VirtualMachine* vm)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::revert_migrate_after_failure()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     HostShareCapacity sr;
 
     time_t the_time = time(0);
@@ -264,6 +276,12 @@ void LifeCycleManager::trigger_save_failure(int vid)
 
 void LifeCycleManager::trigger_deploy_success(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::trigger_deploy_success()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         auto vm = vmpool->get(vid);
@@ -355,6 +373,12 @@ void LifeCycleManager::trigger_deploy_success(int vid)
 
 void LifeCycleManager::trigger_deploy_failure(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::trigger_deploy_failure()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         auto vm = vmpool->get(vid);

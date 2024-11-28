@@ -14,6 +14,9 @@
 /* limitations under the License.                                             */
 /* -------------------------------------------------------------------------- */
 
+#include <string> 
+#include "NebulaLog.h"
+
 #include "RequestManagerVirtualMachine.h"
 #include "VirtualMachineDisk.h"
 #include "PoolObjectAuth.h"
@@ -305,6 +308,8 @@ int RequestManagerVirtualMachine::get_host_information(
 
 
 {
+    NebulaLog::log("HMM", Log::ERROR, "*** VirtualMachineMigrate::get_host_information()");
+
     Nebula&    nd    = Nebula::instance();
     HostPool * hpool = nd.get_hpool();
 
@@ -455,6 +460,12 @@ Request::ErrorCode VirtualMachineAction::request_execute(RequestAttributes& att,
                                                          const std::string& action_str,
                                                          int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineAction::request_execute()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int    rc;
 
     std::string memory, cpu;
@@ -597,6 +608,12 @@ Request::ErrorCode VirtualMachineAction::request_execute(RequestAttributes& att,
 void VirtualMachineAction::request_execute(xmlrpc_c::paramList const& paramList,
                                            RequestAttributes& att)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineAction::request_execute() - 2";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     string action_str = paramList.getString(1);
     int    vid        = paramList.getInt(2);
 
@@ -750,6 +767,8 @@ static int set_migrate_vnc_port(VirtualMachine *vm, int cluster_id, bool keep)
 void VirtualMachineDeploy::request_execute(xmlrpc_c::paramList const& paramList,
                                            RequestAttributes& att)
 {
+    NebulaLog::log("HMM", Log::ERROR, "*** VirtualMachineDeploy::request_execute()");
+
     Nebula&             nd = Nebula::instance();
     DatastorePool * dspool = nd.get_dspool();
 
@@ -775,6 +794,7 @@ void VirtualMachineDeploy::request_execute(xmlrpc_c::paramList const& paramList,
     // Get request parameters and information about the target host
     // ------------------------------------------------------------------------
     int  id      = xmlrpc_c::value_int(paramList.getInt(1));
+    NebulaLog::log("HMM", Log::ERROR, "***     id:" + std::to_string(id));
     int  hid     = xmlrpc_c::value_int(paramList.getInt(2));
     bool enforce = false;
     int  ds_id   = -1;
@@ -1054,6 +1074,8 @@ void VirtualMachineDeploy::request_execute(xmlrpc_c::paramList const& paramList,
 void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList,
                                             RequestAttributes& att)
 {
+    NebulaLog::log("HMM", Log::ERROR, "*** VirtualMachineMigrate::request_execute()");
+
     Nebula& nd = Nebula::instance();
 
     DatastorePool * dspool = nd.get_dspool();
@@ -1085,8 +1107,11 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
     // ------------------------------------------------------------------------
 
     int  id      = xmlrpc_c::value_int(paramList.getInt(1));
+    NebulaLog::log("HMM", Log::ERROR, "***     id:" + std::to_string(id));
     int  hid     = xmlrpc_c::value_int(paramList.getInt(2));
+    NebulaLog::log("HMM", Log::ERROR, "***     hid:" + std::to_string(hid));
     bool live    = xmlrpc_c::value_boolean(paramList.getBoolean(3));
+    NebulaLog::log("HMM", Log::ERROR, "***     live:" + std::to_string(live));
     bool enforce = false;
     int  ds_id   = -1;
     int  poffmgr = 0;
@@ -1094,16 +1119,19 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
     if ( paramList.size() > 4 )
     {
         enforce = xmlrpc_c::value_boolean(paramList.getBoolean(4));
+        NebulaLog::log("HMM", Log::ERROR, "***     live:" + std::to_string(enforce));
     }
 
     if ( paramList.size() > 5 )
     {
         ds_id = xmlrpc_c::value_int(paramList.getInt(5));
+        NebulaLog::log("HMM", Log::ERROR, "***     ds_id:" + std::to_string(ds_id));
     }
 
     if ( paramList.size() > 6 )
     {
         poffmgr = xmlrpc_c::value_int(paramList.getInt(6));
+        NebulaLog::log("HMM", Log::ERROR, "***     poffmgr:" + std::to_string(poffmgr));
     }
 
     if (get_host_information(hid,
@@ -1114,6 +1142,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
                              host_perms,
                              att) != 0)
     {
+        NebulaLog::log("HMM", Log::ERROR, "***     Failed to get host information");
         return;
     }
 
@@ -1146,6 +1175,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
 
     if (auth == false)
     {
+        NebulaLog::log("HMM", Log::ERROR, "***     Failed to get authorization request");
         return;
     }
 
@@ -1162,6 +1192,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
 
     if (vm == nullptr)
     {
+        NebulaLog::log("HMM", Log::ERROR, "***     Failed to get vm");
         return;
     }
 
@@ -1174,6 +1205,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
     {
         att.resp_msg = "Migrate action is not available for state " + vm->state_str();
         failure_response(ACTION, att);
+        NebulaLog::log("HMM", Log::ERROR, "***     Migrate action is not available for state " + vm->state_str());
 
         return;
     }
@@ -1227,6 +1259,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
     if (check_host(hid, enforce, vm.get(), att.resp_msg) == false)
     {
         failure_response(ACTION, att);
+        NebulaLog::log("HMM", Log::ERROR, "***     Host has not enough capacity");
         return;
     }
 
@@ -1400,6 +1433,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
     // Migrate the VM
     // ------------------------------------------------------------------------
 
+    NebulaLog::log("HMM", Log::ERROR, "***     Migrating vm ...");
     if (live && vm->get_lcm_state() == VirtualMachine::RUNNING )
     {
         dm->live_migrate(vm.get(), att);

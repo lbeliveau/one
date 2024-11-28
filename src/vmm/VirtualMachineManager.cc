@@ -374,6 +374,12 @@ static int do_context_command(VirtualMachine * vm, const string& password,
 
 void VirtualMachineManager::trigger_deploy(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineManager::trigger_deploy()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         const VirtualMachineManagerDriver * vmd;
@@ -1151,6 +1157,12 @@ error_common:
 
 void VirtualMachineManager::trigger_migrate(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineManager::trigger_migrate()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         const VirtualMachineManagerDriver * vmd;

@@ -30,6 +30,12 @@ using namespace std;
 
 void LifeCycleManager::trigger_deploy(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::trigger_deploy()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         ostringstream       os;
@@ -239,6 +245,12 @@ void LifeCycleManager::trigger_stop(int vid, const RequestAttributes& ra)
 void LifeCycleManager::trigger_migrate(int vid, const RequestAttributes& ra,
                                        VMActions::Action vm_action)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::trigger_migrate()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int uid = ra.uid;
     int gid = ra.gid;
     int req_id = ra.req_id;

@@ -16,8 +16,8 @@
 import { array, object } from 'yup'
 
 export const SCHEMA = array(object())
-  .min(1)
+  .min(0)
   .max(1)
-  .required()
+  .notRequired()
   .ensure()
   .default(() => [])
