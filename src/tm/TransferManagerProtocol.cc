@@ -37,6 +37,12 @@ void TransferManager::_transfer(unique_ptr<transfer_msg_t> msg)
 {
     string msg_str;
 
+    {
+        ostringstream oss;
+        oss << "*** TransferManager::_transfer()";
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     msg->write_to(msg_str);
     NebulaLog::debug("TrM", "Message received: " + msg_str);
 

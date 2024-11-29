@@ -139,6 +139,12 @@ int VirtualMachinePool::allocate(
         string&        error_str,
         bool           on_hold)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachinePool::allocate()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     string deploy_id;
 
     // ------------------------------------------------------------------------

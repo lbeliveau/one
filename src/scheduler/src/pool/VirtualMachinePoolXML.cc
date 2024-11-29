@@ -26,6 +26,12 @@ using namespace std;
 
 int VirtualMachinePoolXML::set_up()
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachinePoolXML::set_up()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     ostringstream   oss;
 
     int rc = PoolXML::set_up();
@@ -129,8 +135,15 @@ void VirtualMachinePoolXML::add_object(xmlNodePtr node)
 
 int VirtualMachinePoolXML::load_info(xmlrpc_c::value &result)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachinePoolXML::load_info()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     try
     {
+        NebulaLog::log("SCHED", Log::ERROR, "***    calling one.vmpool.infoextended");
         client->call("one.vmpool.infoextended", "iiii", &result, -2, -1, -1, -1);
 
         return 0;
@@ -152,6 +165,12 @@ int VirtualMachinePoolXML::load_info(xmlrpc_c::value &result)
 int VirtualMachinePoolXML::dispatch(int vid, int hid, int dsid, bool resched,
                                     const string& extra_template) const
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachinePoolXML::dispatch()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     xmlrpc_c::value deploy_result;
 
     if (auto vm = get(vid))
@@ -163,6 +182,7 @@ int VirtualMachinePoolXML::dispatch(int vid, int hid, int dsid, bool resched,
     {
         if (resched == true)
         {
+            NebulaLog::log("SCHED", Log::ERROR, "***    one.vm.migrate");
             client->call("one.vm.migrate",// methodName
                          "iibbii",        // arguments format
                          &deploy_result,  // resultP
@@ -176,6 +196,7 @@ int VirtualMachinePoolXML::dispatch(int vid, int hid, int dsid, bool resched,
         }
         else
         {
+            NebulaLog::log("SCHED", Log::ERROR, "***    calling one.vm.deploy");
             client->call("one.vm.deploy", // methodName
                          "iibis",         // arguments format
                          &deploy_result,  // resultP
@@ -223,11 +244,18 @@ int VirtualMachinePoolXML::dispatch(int vid, int hid, int dsid, bool resched,
 
 int VirtualMachinePoolXML::update(int vid, const string &st) const
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachinePoolXML::update()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     xmlrpc_c::value result;
     bool            success;
 
     try
     {
+        NebulaLog::log("SCHED", Log::ERROR, "***    calling VirtualMachinePoolXML::update");
         client->call("one.vm.update", "isi", &result, vid, st.c_str(), 1);
     }
     catch (exception const& e)

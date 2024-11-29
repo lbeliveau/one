@@ -120,6 +120,12 @@ void VirtualMachineManager::_undefined(unique_ptr<vm_msg_t> msg)
 
 void VirtualMachineManager::_deploy(unique_ptr<vm_msg_t> msg)
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineManager::_deploy()";
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     log_message(msg.get());
 
     int id = msg->oid();

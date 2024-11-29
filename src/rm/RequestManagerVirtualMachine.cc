@@ -462,7 +462,7 @@ Request::ErrorCode VirtualMachineAction::request_execute(RequestAttributes& att,
 {
     {
         ostringstream oss;
-        oss << "*** VirtualMachineAction::request_execute()";
+        oss << "*** VirtualMachineAction::request_execute(), action_str:" + action_str;
         NebulaLog::log("SCHED", Log::ERROR, oss);
     }
 
@@ -796,6 +796,7 @@ void VirtualMachineDeploy::request_execute(xmlrpc_c::paramList const& paramList,
     int  id      = xmlrpc_c::value_int(paramList.getInt(1));
     NebulaLog::log("HMM", Log::ERROR, "***     id:" + std::to_string(id));
     int  hid     = xmlrpc_c::value_int(paramList.getInt(2));
+    NebulaLog::log("HMM", Log::ERROR, "***     hid:" + std::to_string(hid));
     bool enforce = false;
     int  ds_id   = -1;
 
@@ -834,6 +835,7 @@ void VirtualMachineDeploy::request_execute(xmlrpc_c::paramList const& paramList,
     {
         return;
     }
+    NebulaLog::log("HMM", Log::ERROR, "***     hostname:" + hostname);
 
 
     // ------------------------------------------------------------------------
@@ -1119,7 +1121,7 @@ void VirtualMachineMigrate::request_execute(xmlrpc_c::paramList const& paramList
     if ( paramList.size() > 4 )
     {
         enforce = xmlrpc_c::value_boolean(paramList.getBoolean(4));
-        NebulaLog::log("HMM", Log::ERROR, "***     live:" + std::to_string(enforce));
+        NebulaLog::log("HMM", Log::ERROR, "***     enforce:" + std::to_string(enforce));
     }
 
     if ( paramList.size() > 5 )

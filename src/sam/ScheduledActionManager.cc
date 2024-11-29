@@ -540,7 +540,15 @@ void ScheduledActionManager::run_scheduled_action_vm(int vm_id, int sa_id, const
 
     sa_pool->update(sa.get());
 
+    {
+        ostringstream oss;
+        oss << "*** ScheduledActionManager::run_scheduled_action_vm()";
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     NebulaLog::info("SCH", oss.str());
+    NebulaLog::log("SCH", Log::ERROR, oss.str());
+
 }
 
 /* -------------------------------------------------------------------------- */

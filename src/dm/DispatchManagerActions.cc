@@ -947,6 +947,12 @@ error:
 int DispatchManager::resched(int vid, bool do_resched,
                              const RequestAttributes& ra, string& error_str)
 {
+    {
+        ostringstream oss;
+        oss << "*** DispatchManager::resched(), do_resched:" + std::to_string(do_resched);
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     ostringstream oss;
 
     auto vm = vmpool->get(vid);

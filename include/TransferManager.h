@@ -21,6 +21,8 @@
 #include "DriverManager.h"
 #include "Listener.h"
 
+#include <sstream>
+
 class HostPool;
 class VirtualMachine;
 class VirtualMachineDisk;
@@ -212,6 +214,11 @@ private:
      */
     const Driver<transfer_msg_t> * get(const std::string& name) const
     {
+        {
+            std::ostringstream oss;
+            oss << "*** TransferManager::get()" + name;
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
         return DriverManager::get_driver(name);
     };
 

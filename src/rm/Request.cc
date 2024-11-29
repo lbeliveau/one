@@ -368,6 +368,12 @@ void Request::execute(
         const xmlrpc_c::callInfo * _callInfoP,
         xmlrpc_c::value *   const  _retval)
 {
+    {
+        ostringstream oss;
+        oss << "*** Request::execute()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     RequestAttributes att(auth_op);
 
     att.retval  = _retval;

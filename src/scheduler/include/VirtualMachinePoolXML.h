@@ -118,6 +118,12 @@ protected:
 
     int get_suitable_nodes(std::vector<xmlNodePtr>& content) const override
     {
+        {
+            std::ostringstream oss;
+            oss << "*** VirtualMachinePoolXML::get_suitable_nodes()";
+            NebulaLog::log("SCHED", Log::ERROR, oss);
+        }
+
         // Pending or ((running or unknown) and resched))
         return get_nodes("/VM_POOL/VM[STATE=1 or ((STATE=8 or "
                          "(LCM_STATE=3 or LCM_STATE=16)) and RESCHED=1)]", content);

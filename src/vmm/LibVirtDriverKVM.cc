@@ -504,6 +504,12 @@ int LibVirtDriver::deployment_description_kvm(
         const VirtualMachine *  vm,
         const string&           file_name) const
 {
+    {
+        ostringstream oss;
+        oss << "*** LibVirtDriver::deployment_description_kvm()";
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     ofstream  file;
 
     int       num;

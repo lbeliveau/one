@@ -313,6 +313,13 @@ private:
             const int          oid,
             const std::string& drv_msg) const
     {
+        {
+            std::ostringstream oss;
+            oss << "*** VirtualMachineManagerDriver::deploy()";
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
+        NebulaLog::log("SCH", Log::ERROR, "*** drv_msg: " + drv_msg);
+
         write_drv(VMManagerMessages::DEPLOY, oid, drv_msg);
     }
 

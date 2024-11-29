@@ -38,6 +38,12 @@ VirtualMachineManager::VirtualMachineManager(
     DriverManager(_mad_location),
     Listener("Virtual Machine Manager")
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineManager::VirtualMachineManager(), mad_location:" + _mad_location;
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     Nebula& nd = Nebula::instance();
 
     vmpool  = nd.get_vmpool();
@@ -460,6 +466,11 @@ void VirtualMachineManager::trigger_deploy(int vid)
                 vm->to_xml(vm_tmpl),
                 vm->get_ds_id(),
                 -1);
+        {
+            ostringstream oss;
+            oss << "***     drv_msg: " + drv_msg;
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
 
         vmd->deploy(vid, drv_msg);
 

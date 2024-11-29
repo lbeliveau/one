@@ -25,6 +25,12 @@ int ScheduledActionPool::allocate(PoolObjectSQL::ObjectType type,
                                   const VectorAttribute * va,
                                   string& error_str)
 {
+    {
+        ostringstream oss;
+        oss << "*** ScheduledActionPool::allocate()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     auto sched = new ScheduledAction(type, parent_id);
 
     if (sched->parse(va, origin, error_str) != 0)

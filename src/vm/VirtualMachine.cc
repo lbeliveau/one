@@ -63,6 +63,12 @@ VirtualMachine::VirtualMachine(int           id,
     _log(0),
     _sched_actions("SCHED_ACTIONS")
 {
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachine::VirtualMachine()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     if (_vm_template != 0)
     {
         // This is a VM Template, with the root TEMPLATE.

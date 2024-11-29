@@ -72,6 +72,12 @@ int TransferManager::prolog_transfer_command(
         ostream&                xfr,
         ostringstream&          os)
 {
+    {
+        ostringstream oss;
+        oss << "*** TransferManager::prolog_transfer_command()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     string type;
     string tm_mad_system;
 
@@ -206,6 +212,12 @@ static string prolog_os_transfer_commands(
         string&                 opennebula_hostname,
         ostream&                xfr)
 {
+    {
+        ostringstream oss;
+        oss << "*** prolog_os_transfer_commands()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     string base_ds = base + "_DS";
 
     const string& name_ds = os_attr->vector_value(base_ds);
@@ -256,6 +268,12 @@ int TransferManager::prolog_context_command(
         int&                    disk_id,
         ostream&                xfr)
 {
+    {
+        ostringstream oss;
+        oss << "*** TransferManager::prolog_context_command()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     string  files;
 
     int rc = vm->generate_context(files, disk_id, token_password);
@@ -324,6 +342,12 @@ static int test_and_trigger(VirtualMachine * vm,
 
 void TransferManager::trigger_prolog(VirtualMachine * vm)
 {
+    {
+        ostringstream oss;
+        oss << "*** TransferManager::trigger_prolog()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int vid = vm->get_oid();
 
     int rc  = test_and_trigger(vm,
@@ -378,6 +402,11 @@ void TransferManager::trigger_prolog(VirtualMachine * vm)
         }
 
         vm_tm_mad = vm->get_tm_mad();
+        {
+            ostringstream oss;
+            oss << "***     vm_tm_mad:" + vm_tm_mad;
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
         tm_md     = get();
 
         if ( tm_md == nullptr || vm_tm_mad.empty() )
@@ -497,6 +526,12 @@ error_common:
 
 void TransferManager::trigger_prolog_migr(VirtualMachine * vm)
 {
+    {
+        ostringstream oss;
+        oss << "*** TransferManager::trigger_prolog_migr()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int vid = vm->get_oid();
 
     int rc  = test_and_trigger(vm,
@@ -647,6 +682,12 @@ error_common:
 
 void TransferManager::trigger_prolog_resume(VirtualMachine * vm)
 {
+    {
+        ostringstream oss;
+        oss << "*** TransferManager::trigger_prolog_resume()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int vid = vm->get_oid();
 
     int rc  = test_and_trigger(vm,

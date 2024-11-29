@@ -43,6 +43,12 @@ public:
      */
     virtual int set_up()
     {
+        {
+            std::ostringstream oss;
+            oss << "*** PoolXML::set_up()";
+            NebulaLog::log("SCHED", Log::ERROR, oss);
+        }
+
         int rc;
 
         // ---------------------------------------------------------------------

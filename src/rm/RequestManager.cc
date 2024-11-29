@@ -314,6 +314,12 @@ int RequestManager::start()
 
 void RequestManager::register_xml_methods()
 {
+    {
+        ostringstream oss;
+        oss << "*** RequestManager::register_xml_methods()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     Nebula& nebula = Nebula::instance();
 
     // VMTemplate Methods

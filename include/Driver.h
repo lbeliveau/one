@@ -23,10 +23,12 @@
 #include <fcntl.h>
 #include <string.h>
 
+#include <sstream>
 #include <string>
 #include <thread>
 #include <atomic>
 #include "StreamManager.h"
+#include "NebulaLog.h"
 
 /**
  *  This class wraps the execution of a driver and setups a pipe as communication
@@ -49,7 +51,13 @@ public:
         : cmd(c)
         , arg(a)
         , concurrency(ct)
-    {}
+    {
+        {
+            std::ostringstream oss;
+            oss << "*** Driver::Driver(), c=" + c + ",a" + a;
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
+    }
 
     ~Driver()
     {
@@ -92,6 +100,12 @@ public:
      */
     void write(const std::string&  str) const
     {
+        {
+            std::ostringstream oss;
+            oss << "*** Driver::write(), c=" + cmd + ",a" + arg;
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
+
         (void) ::write(to_drv, str.c_str(), str.size());
     };
 
@@ -100,6 +114,12 @@ public:
      */
     void write(const MSG& msg) const
     {
+        {
+            std::ostringstream oss;
+            oss << "*** Driver::write(), c=" + cmd + ",a" + arg;
+            NebulaLog::log("SCH", Log::ERROR, oss);
+        }
+
         msg.write_to(to_drv);
     };
 

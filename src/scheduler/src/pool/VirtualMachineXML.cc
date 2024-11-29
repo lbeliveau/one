@@ -63,6 +63,11 @@ void VirtualMachineXML::init_attributes()
 
     xpath(tmp, "/VM/RESCHED", 0);
     resched = tmp == 1;
+    {
+        ostringstream oss;
+        oss << "*** VirtualMachineXML::init_attributes(), resched:" + std::to_string(resched);
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
 
     xpath(action, "/VM/HISTORY_RECORDS/HISTORY/ACTION", -1);
     resume = (action == VMActions::STOP_ACTION || action == VMActions::UNDEPLOY_ACTION

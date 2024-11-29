@@ -642,6 +642,12 @@ void LifeCycleManager::trigger_shutdown_failure(int vid)
 
 void LifeCycleManager::trigger_prolog_success(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::trigger_prolog_success()";
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         time_t                  the_time = time(0);
@@ -1212,6 +1218,12 @@ void LifeCycleManager::trigger_monitor_poweroff(int vid)
 
 void LifeCycleManager::trigger_monitor_poweron(int vid)
 {
+    {
+        ostringstream oss;
+        oss << "*** LifeCycleManager::trigger_monitor_poweron()";
+        NebulaLog::log("SCH", Log::ERROR, oss);
+    }
+
     trigger([this, vid]
     {
         auto vm = vmpool->get(vid);

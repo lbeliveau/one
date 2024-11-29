@@ -67,6 +67,11 @@ ScheduledAction::ScheduledAction(PoolObjectSQL::ObjectType type,
     , _done(-1)
     , _warning(0)
 {
+    {
+        ostringstream oss;
+        oss << "*** ScheduledAction::ScheduledAction()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
 }
 
 /* -------------------------------------------------------------------------- */

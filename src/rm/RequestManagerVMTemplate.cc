@@ -31,6 +31,12 @@ using namespace std;
 void VMTemplateInstantiate::request_execute(xmlrpc_c::paramList const& paramList,
                                             RequestAttributes& att)
 {
+    {
+        ostringstream oss;
+        oss << "*** VMTemplateInstantiate::request_execute()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int    id   = xmlrpc_c::value_int(paramList.getInt(1));
     string name = xmlrpc_c::value_string(paramList.getString(2));
     bool   on_hold = false;        //Optional XML-RPC argument
@@ -125,6 +131,12 @@ Request::ErrorCode VMTemplateInstantiate::request_execute(int id, const string& 
                                                           bool on_hold, const string &str_uattrs, Template* extra_attrs, int& vid,
                                                           RequestAttributes& att)
 {
+    {
+        ostringstream oss;
+        oss << "*** VMTemplateInstantiate::request_execute()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int rc;
     std::string memory, cpu;
 

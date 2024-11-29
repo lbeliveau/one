@@ -427,6 +427,12 @@ void Scheduler::start()
 
 int Scheduler::set_up_pools()
 {
+    {
+        ostringstream oss;
+        oss << "*** Scheduler::set_up_pools()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int                             rc;
 
     //--------------------------------------------------------------------------
@@ -1884,6 +1890,12 @@ void Scheduler::external_scheduler()
 
 void Scheduler::timer_action()
 {
+    {
+        ostringstream oss;
+        oss << "*** Scheduler::timer_action()";
+        NebulaLog::log("SCHED", Log::ERROR, oss);
+    }
+
     int rc;
 
     try
